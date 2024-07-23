@@ -23,22 +23,22 @@ meta = vr.video_meta()
 print(meta)
 
 feature = LBPFeature()
-
-#feature = HOGFeature()
+feature = HOGFeature()
 feature_vector = []
 df = pd.DataFrame(columns=["frame_no"])
 
 visualize_graphs = True
 show_frames = True
-n_seconds_to_process = meta["fps"]*50
-n_seconds= 0
+n_frames_to_process = meta["fps"]*50
+nth_frame= 0
 for frame in vr.get_frame():
-    if frame is not None and n_seconds < n_seconds_to_process:
+    if frame is not None and nth_frame < n_frames_to_process:
         # Take one channel image, gives you a pseudo grey image
+        print(f"Processing frame no: {nth_frame}")
         frame = frame[:,:,0]
         frame = resize_with_aspect_ratio(frame,width=160)
         feature_vector.append(feature.compute(frame))
-        n_seconds +=1
+        nth_frame +=1
         if show_frames:
             cv2.imshow("Resized Video frame",frame)
             if cv2.waitKey(30) & 0xFF == ord('q'):
@@ -60,7 +60,7 @@ sse = kmc.compute_sse(pca_data)
 if visualize_graphs:
     kmc.visualize_sse(sse)
 
-optimal_k = find_kneed(sse)*2
+optimal_k = find_kneed(sse)*6
 if visualize_graphs:
     visualize_kneed(optimal_k, sse)
 
