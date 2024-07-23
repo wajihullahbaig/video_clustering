@@ -3,7 +3,7 @@ Finding keyframes in video using image features and clustering.
 Using this code you can create high lights of a video. like showing keyframes as GIFs to a user while the
 user hovers the mouse over an icon.
 
-Some resources followed to code the project are as follows
+Some resources followed to code the project are as follows;
 
 [video](https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_30mb.mp4)
 
