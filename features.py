@@ -42,7 +42,7 @@ class HOGFeature(Feature):
         
 class LBPFeature(Feature):
     radius = 8
-    n_points = 32 * radius
+    n_points = 4 * radius
     eps = np.finfo(float).eps
     def compute(self,input_image:ndarray) -> ndarray:
         try:

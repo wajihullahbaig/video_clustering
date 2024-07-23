@@ -36,3 +36,14 @@ class VideoReader:
             print(ex)
             self.capture.release()
             return None
+        
+    def get_nth_frame(self,frame_no)->ndarray:
+        try:
+            cap = cv2.VideoCapture(self.file_path)
+            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_no)
+            res, frame = cap.read()
+            return frame   
+        except Exception as ex:
+            print(ex)
+            self.capture.release()
+            return None
