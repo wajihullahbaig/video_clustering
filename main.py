@@ -23,13 +23,13 @@ meta = vr.video_meta()
 print(meta)
 
 feature = LBPFeature()
-feature = HOGFeature()
+#feature = HOGFeature()
 feature_vector = []
 df = pd.DataFrame(columns=["frame_no"])
 
 visualize_graphs = True
 show_frames = True
-n_frames_to_process = meta["fps"]*50
+n_frames_to_process = meta["fps"]*10
 nth_frame= 0
 for frame in vr.get_frame():
     if frame is not None and nth_frame < n_frames_to_process:
@@ -60,7 +60,7 @@ sse = kmc.compute_sse(pca_data)
 if visualize_graphs:
     kmc.visualize_sse(sse)
 
-optimal_k = find_kneed(sse)*6
+optimal_k = find_kneed(sse)*3
 if visualize_graphs:
     visualize_kneed(optimal_k, sse)
 
@@ -90,7 +90,7 @@ for frame in vr.get_frame():
         frame_count += 1 
 
 df_gif_frames = df.drop_duplicates('labels', keep='last')
-import imageio
+
 images = []
 for filename in df_gif_frames["path"].values:
     images.append(imageio.imread(filename))
