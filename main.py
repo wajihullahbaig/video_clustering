@@ -7,9 +7,11 @@ This is a temporary script file.
 
 import cv2 
 import pandas as pd
-import numpy as np
 from sklearn.decomposition import PCA
 import imageio
+import matplotlib.pyplot as plt
+import numpy as np
+import shutil
 
 from features import HOGFeature,LBPFeature
 from clustering import KMeansCluster
@@ -29,7 +31,7 @@ df = pd.DataFrame(columns=["frame_no"])
 
 visualize_graphs = True
 show_frames = True
-n_frames_to_process = meta["fps"]*10
+n_frames_to_process = meta["fps"]*30
 nth_frame= 0
 for frame in vr.get_frame():
     if frame is not None and nth_frame < n_frames_to_process:
@@ -44,7 +46,13 @@ for frame in vr.get_frame():
             if cv2.waitKey(30) & 0xFF == ord('q'):
                 break
 if visualize_graphs:
-    cv2.destroyAllWindows()        
+    cv2.destroyAllWindows()    
+
+# Show a plot of features
+# Plot feature vectors
+plt.bar(np.arange(len(feature_vector[0])),feature_vector[0],width=5,align='center')
+plt.show()
+    
 # Prepare data for clustering
 # We use 2 components so we can also visualize the clusters
 pca = PCA(n_components=2)
@@ -84,14 +92,21 @@ for frame in vr.get_frame():
         v = df.loc[frame_count]
         if not os.path.exists("clusters/"+str(int(v["labels"]))):
             os.makedirs("clusters/"+str(int(v["labels"])))
+        else:
+            shutil.rmtree("clusters/"+str(int(v["labels"])))
+            os.makedirs("clusters/"+str(int(v["labels"])))
+            
         file_path = "clusters/"+str(int(v["labels"]))+"/"+str(int(v["frame_no"]))+'.jpg'
         cv2.imwrite(file_path,frame)
         df.loc[frame_count,["path"]] = file_path
         frame_count += 1 
 
+# Lets use some frames to create animated GIF
 df_gif_frames = df.drop_duplicates('labels', keep='last')
 
 images = []
 for filename in df_gif_frames["path"].values:
     images.append(imageio.imread(filename))
 imageio.mimsave('movie.gif', images,fps=1)
+
+

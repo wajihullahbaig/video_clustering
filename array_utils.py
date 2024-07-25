@@ -22,6 +22,9 @@ def remap_range(input_array:np.ndarray , new_max,new_min):
         new_array = (((input_array - old_min) * new_range) / old_range) + new_min
     return new_array
 
+def normalize(input_array:np.ndarray):
+    return (input_array - np.min(input_array)) / (np.max(input_array) - np.min(input_array))
+
 
 def find_kneed(arr)->int:
     if len(arr) < 2:

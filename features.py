@@ -11,7 +11,7 @@ import numpy as np
 import cv2
 from skimage.feature import local_binary_pattern
 import numpy as np
-from array_utils import remap_range
+from array_utils import remap_range,normalize
 
 class Feature(ABC):
     @abstractmethod
@@ -29,7 +29,9 @@ class HOGFeature(Feature):
     def compute(self,input_image:ndarray)->ndarray:
         try:
             features = self.hog.compute(input_image)
-            # remap range
+            # normalize to [0,1] range
+            features = normalize(features)
+            # remap range for histogram bins for 256 bin of gray scales
             features = np.trunc(remap_range(features, 255.0, 0.0))
             (hist, _) = np.histogram(features.ravel(),bins=np.arange(0,257),density=True)
             # normalize the histogram
@@ -47,7 +49,11 @@ class LBPFeature(Feature):
     def compute(self,input_image:ndarray) -> ndarray:
         try:
             lbp = local_binary_pattern(input_image, self.n_points,self.radius, method="uniform")
-            (hist, _) = np.histogram(lbp.ravel(),bins=np.arange(0,257),density=True)
+            # normalize to [0,1] range
+            features = normalize(lbp.ravel())
+            # remap range for histogram bins for 256 bin of gray scales
+            features = np.trunc(remap_range(features, 255.0, 0.0))
+            (hist, _) = np.histogram(features,bins=np.arange(0,257),density=True)
             # normalize the histogram
             hist = hist.astype("float")
             hist /= (hist.sum() +self.eps)
