@@ -10,7 +10,6 @@ from numpy import ndarray
 import numpy as np
 import cv2
 from skimage.feature import local_binary_pattern
-import numpy as np
 from array_utils import remap_range,normalize_min_max,normalize_standard_deviation
 
 class Feature(ABC):
@@ -43,10 +42,7 @@ class LBPFeature(Feature):
         try:
             lbp = local_binary_pattern(input_image, self.n_points,self.radius, method="uniform")
             features = normalize_min_max(lbp.ravel())
-            (hist, _) = np.histogram(features,bins=np.arange(0,1),density=True)
-            # normalize the histogram
-            hist = hist.astype("float")
-            hist /= (hist.sum() +self.eps)
+            (hist, _) = np.histogram(features,bins=256,range = (0,1),density=True)
             return hist
         except Exception as ex:
             print(ex)
@@ -56,7 +52,7 @@ class VGG16Feature(Feature):
 
     def compute(self,input_image:ndarray) -> ndarray:
         try:
-           pass
+            raise NotImplementedError("VGG16 features!")
         except Exception as ex:
             print(ex)
             return None  

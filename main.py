@@ -87,16 +87,18 @@ vr = VideoReader("big_buck_bunny_360p_20mb.webm")
 import os
 frame_count = 0 
 df["path"] = None
+root_folder = "clusters/"
+if os.path.exists(root_folder):
+    shutil.rmtree("clusters/")
+
 for frame in vr.get_frame():
     if frame is not None and frame_count in df["frame_no"].values:
         v = df.loc[frame_count]
-        if not os.path.exists("clusters/"+str(int(v["labels"]))):
-            os.makedirs("clusters/"+str(int(v["labels"])))
-        else:
-            shutil.rmtree("clusters/"+str(int(v["labels"])))
-            os.makedirs("clusters/"+str(int(v["labels"])))
+        if not os.path.exists(root_folder+str(int(v["labels"]))):
+            os.makedirs(root_folder+str(int(v["labels"])))
+        
             
-        file_path = "clusters/"+str(int(v["labels"]))+"/"+str(int(v["frame_no"]))+'.jpg'
+        file_path = root_folder+str(int(v["labels"]))+"/"+str(int(v["frame_no"]))+'.jpg'
         cv2.imwrite(file_path,frame)
         df.loc[frame_count,["path"]] = file_path
         frame_count += 1 
