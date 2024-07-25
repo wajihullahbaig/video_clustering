@@ -11,7 +11,7 @@ Some resources followed to code the project are as follows;
 
 [lbp descriptor](https://pyimagesearch.com/2015/12/07/local-binary-patterns-with-python-opencv/)
 
-[log descriptor](https://medium.com/@dnemutlu/hog-feature-descriptor-263313c3b40d)
+[hog descriptor](https://medium.com/@dnemutlu/hog-feature-descriptor-263313c3b40d)
 
 [kmeans clustering](https://www.statology.org/k-means-clustering-in-python/)
 
