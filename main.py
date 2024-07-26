@@ -25,7 +25,7 @@ meta = vr.video_meta()
 print(meta)
 
 feature = LBPFeature()
-#feature = HOGFeature()
+feature = HOGFeature()
 feature_vector = []
 df = pd.DataFrame(columns=["frame_no"])
 

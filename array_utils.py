@@ -25,7 +25,7 @@ def remap_range(input_array:np.ndarray , new_max,new_min):
 def normalize_min_max(input_array:np.ndarray):
     return (input_array - np.min(input_array)) / (np.max(input_array) - np.min(input_array))
 
-def normalize_standard_deviation(input_array:np.ndarray):
+def standardize_zero_mean(input_array:np.ndarray):
     return (input_array - input_array.mean()) / (input_array.std())
 
 def find_kneed(arr)->int:

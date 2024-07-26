@@ -10,7 +10,7 @@ from numpy import ndarray
 import numpy as np
 import cv2
 from skimage.feature import local_binary_pattern
-from array_utils import remap_range,normalize_min_max,normalize_standard_deviation
+from array_utils import remap_range,normalize_min_max,standardize_zero_mean
 
 class Feature(ABC):
     @abstractmethod
