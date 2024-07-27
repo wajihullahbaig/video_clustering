@@ -18,7 +18,7 @@ class Feature(ABC):
         pass
     
 class HOGFeature(Feature):
-    win_size=(16,16)
+    win_size=(128,72) # Input image size
     block_size=(8,8)
     block_stride = (4,4)
     cell_size=(4,4)

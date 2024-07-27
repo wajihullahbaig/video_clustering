@@ -25,7 +25,7 @@ meta = vr.video_meta()
 print(meta)
 
 feature = LBPFeature()
-feature = HOGFeature()
+#feature = HOGFeature()
 feature_vector = []
 df = pd.DataFrame(columns=["frame_no"])
 
@@ -38,7 +38,10 @@ for frame in vr.get_frame():
         # Take one channel image, gives you a pseudo grey image
         print(f"Processing frame no: {nth_frame}")
         frame = frame[:,:,0]
-        frame = resize_with_aspect_ratio(frame,width=160)
+        # Resizing the frame, faster processing
+        # Make sure this is same for win_size in HoG class
+        frame = resize_with_aspect_ratio(frame,width=128)
+                        
         feature_vector.append(feature.compute(frame))
         nth_frame +=1
         if show_frames:

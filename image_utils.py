@@ -7,20 +7,33 @@ Created on Mon Jul 22 12:26:30 2024
 
 import cv2
 
-def resize_with_aspect_ratio(image, width=None, height=None):
-    # Get the original image dimensions
-    h, w = image.shape[:2]
+def resize_with_aspect_ratio(image, width = None, height = None, inter = cv2.INTER_AREA):
+    # initialize the dimensions of the image to be resized and
+    # grab the image size
+    dim = None
+    (h, w) = image.shape[:2]
 
-    # Calculate the aspect ratio
-    aspect_ratio = w / h
+    # if both the width and height are None, then return the
+    # original image
+    if width is None and height is None:
+        return image
 
+    # check to see if the width is None
     if width is None:
-        # Calculate height based on the specified width
-        new_height = int(height / aspect_ratio)
-        resized_image = cv2.resize(image, (height, new_height))
-    else:
-        # Calculate width based on the specified height
-        new_width = int(width * aspect_ratio)
-        resized_image = cv2.resize(image, (new_width, width))
+        # calculate the ratio of the height and construct the
+        # dimensions
+        r = height / float(h)
+        dim = (int(w * r), height)
 
-    return resized_image
+    # otherwise, the height is None
+    else:
+        # calculate the ratio of the width and construct the
+        # dimensions
+        r = width / float(w)
+        dim = (width, int(h * r))
+
+    # resize the image
+    resized = cv2.resize(image, dim, interpolation = inter)
+
+    # return the resized image
+    return resized
