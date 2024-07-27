@@ -15,7 +15,7 @@ Medium article [hog descriptor](https://medium.com/@dnemutlu/hog-feature-descrip
 
 Python Code for HOG [hog descriptor](https://medium.com/@dnemutlu/hog-feature-descriptor-263313c3b40d)
 
-[Python implementation code for HoG](https://builtin.com/articles/histogram-of-oriented-gradients#:~:text=Histogram%20of%20oriented%20gradients%20(HOG)%20is%20a%20feature%20descriptor%20like,the%20purpose%20of%20object%20detection.)
+Python implementation code for HoG[Hog Descriptor](https://builtin.com/articles/histogram-of-oriented-gradients#:~:text=Histogram%20of%20oriented%20gradients%20(HOG)%20is%20a%20feature%20descriptor%20like,the%20purpose%20of%20object%20detection.)
 
 How Kmeans clustering works [kmeans clustering](https://www.statology.org/k-means-clustering-in-python/)
 
