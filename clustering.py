@@ -7,7 +7,7 @@ Created on Tue Jul 23 10:02:08 2024
 
 import pandas as pd
 from abc import ABC, abstractmethod
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, DBSCAN 
 import matplotlib.pyplot as plt
 from numpy import ndarray
 import matplotlib.pyplot as plt
@@ -65,3 +65,20 @@ class KMeansCluster(Cluster):
         return kmeans.labels_
       
 
+class DBScanCluster(Cluster):
+    def __init__(self):
+        pass
+        
+    def visualize_clusters(self,df:pd.DataFrame())-> None:
+        plt.figure(figsize=(10, 7))
+        sns.scatterplot(data=df, x='PCA1', y='PCA2', hue='labels', palette='viridis')
+        plt.title('PCA and  Clustering Visualization')
+        plt.xlabel('Principal Component 1')
+        plt.ylabel('Principal Component 2')
+        plt.legend(title='Cluster')
+        plt.show()
+     
+    def compute(self,data: ndarray) -> list:
+       db_default = DBSCAN(eps = 0.5).fit(data) 
+       return db_default.labels_      
+    

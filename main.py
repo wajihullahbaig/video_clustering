@@ -14,18 +14,19 @@ import numpy as np
 import shutil
 
 from features import HOGFeature,LBPFeature
-from clustering import KMeansCluster
 from video_reader import VideoReader
 from image_utils import resize_with_aspect_ratio
-from array_utils import find_kneed, visualize_kneed
+from do_clustering import do_kmeans,do_dbscan
 
 
+
+    
 vr = VideoReader("big_buck_bunny_360p_20mb.webm")
 meta = vr.video_meta()
 print(meta)
 
 feature = LBPFeature()
-#feature = HOGFeature()
+feature = HOGFeature()
 feature_vector = []
 df = pd.DataFrame(columns=["frame_no"])
 
@@ -64,24 +65,9 @@ df["frame_no"] = list(range(len(pca_data)))
 df["PCA1"] = pca_data[:,0]
 df["PCA2"] = pca_data[:,1]
 
-# Compute clusters
-kmc = KMeansCluster()
-
-sse = kmc.compute_sse(pca_data)  
-if visualize_graphs:
-    kmc.visualize_sse(sse)
-
-optimal_k = find_kneed(sse)*3
-if visualize_graphs:
-    visualize_kneed(optimal_k, sse)
-
-optimal_k = optimal_k
-labels = kmc.compute(pca_data, optimal_k)
-#save cluster assignments for each observation
-df['labels'] = pd.Series(labels, index=df.index)
-if visualize_graphs:
-    # Make sure you have 2D data for visualizations
-    kmc.visualize_clusters(df)
+# Do the clustering
+#do_kmeans(df, pca_data, visualize_graphs)
+do_dbscan(df, pca_data, visualize_graphs)
 
 
 # Close video read it again. Opencv rewind does not seem to work
