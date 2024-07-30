@@ -4,7 +4,7 @@ Created on Sun Jul 28 13:29:03 2024
 
 @author: Acer
 """
-from clustering import KMeansCluster,DBScanCluster
+from clustering import KMeansCluster,DBScanCluster, AfinitiyPropogationCluster
 from array_utils import find_kneed, visualize_kneed
 import pandas as pd
 
@@ -37,3 +37,14 @@ def do_dbscan(df,pca_data,visualize_graphs):
     if visualize_graphs:
         # Make sure you have 2D data for visualizations
         dbc.visualize_clusters(df)
+        
+      
+def do_afinity_propogation(df,pca_data,visualize_graphs):
+    # Compute the cluster
+    apc = AfinitiyPropogationCluster()
+    labels = apc.compute(pca_data)
+    #save cluster assignments for each observation
+    df['labels'] = pd.Series(labels, index=df.index)
+    if visualize_graphs:
+        # Make sure you have 2D data for visualizations
+        apc.visualize_clusters(df)        

@@ -16,7 +16,7 @@ import shutil
 from features import HOGFeature,LBPFeature
 from video_reader import VideoReader
 from image_utils import resize_with_aspect_ratio
-from do_clustering import do_kmeans,do_dbscan
+from do_clustering import do_kmeans,do_dbscan,do_afinity_propogation
 
 
 
@@ -67,7 +67,8 @@ df["PCA2"] = pca_data[:,1]
 
 # Do the clustering
 #do_kmeans(df, pca_data, visualize_graphs)
-do_dbscan(df, pca_data, visualize_graphs)
+#do_dbscan(df, pca_data, visualize_graphs)
+do_afinity_propogation(df, pca_data, visualize_graphs)
 
 
 # Close video read it again. Opencv rewind does not seem to work
